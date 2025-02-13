@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Font Awesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            background-color: #DCEAF5;
+        }
+
+
+        .inter-uniquifier {
+  font-family: "Inter", serif;
+
+}
+
+.inika-regular {
+  font-family: "Inika", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+        .header {
+            background-color: #310a31;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            z-index: 5;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .header img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            flex: 1;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        .toggle-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #310a31;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            z-index: 4;
+            scrollbar-width: thin;
+            scrollbar-color: white #310a31;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+
+  
+
+        .sidebar ul {
+            padding: 0;
+            list-style: none;
+
+        }
+
+        .sidebar ul li {
+      padding: 15px;
+      border-bottom: 2px solid #000000;
+      position: relative;
+    }
+
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;  
+      display: flex;
+      font-size: 14px;
+      align-items: center;
+      justify-content: space-between;
+      transition: color 0.3s ease;
+    }
+
+
+    .sidebar ul li a:hover {
+      color: #ffa72b;
+    }
+
+
+    .sidebar ul li ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.5s ease-out;
+    }
+
+    .sidebar ul li ul.open {
+      max-height: 300px; 
+    }
+
+    .sidebar ul li ul li {
+      padding: 9px;
+      border-bottom: none;
+      font-size: 14px;
+    }
+
+    .sidebar ul li ul li a {
+      color: #ffffff;
+    
+    }
+
+    .dropdown-icon {
+      font-size: 14px;
+      transition: transform 0.5s ease;
+    }
+
+    .dropdown-icon.rotate {
+      transform: rotate(90deg);
+    }
+
+
+    @media (min-width: 768px) {
+            .sidebar {
+                width: 250px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                padding-top: 60px;
+            }
+
+            .main-content {
+                margin-left: 250px;
+            }
+
+            .toggle-btn {
+                display: none;
+            }
+
+            .header h1 {
+                text-align: center;
+                margin-left: 50px; 
+            }
+
+            .header img {
+                margin-left: 0; 
+            }
+        }
+
+        @media (max-width: 767px) {
+            .toggle-btn {
+                display: block;
+            }
+
+            .header h1 {
+                font-size: 1rem;
+                text-align: left;
+                flex: unset;
+            }
+        }
+
+        .ri--admin-fill {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 14v8H4a8 8 0 0 1 8-8m0-1c-3.315 0-6-2.685-6-6s2.685-6 6-6s6 2.685 6 6s-2.685 6-6 6m9 4h1v5h-8v-5h1v-1a3 3 0 1 1 6 0zm-2 0v-1a1 1 0 1 0-2 0v1z'/%3E%3C/svg%3E");
+        background-color: currentColor;
+        -webkit-mask-image: var(--svg);
+        mask-image: var(--svg);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+      }
+
+
+      .mdi--account-student {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M16 8c0 2.21-1.79 4-4 4s-4-1.79-4-4l.11-.94L5 5.5L12 2l7 3.5v5h-1V6l-2.11 1.06zm-4 6c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4'/%3E%3C/svg%3E");
+        background-color: currentColor;
+        -webkit-mask-image: var(--svg);
+        mask-image: var(--svg);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+      }
+
+
+      .raphael--customer {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23000' d='M28.523 23.813c-.518-.51-6.795-2.938-7.934-3.396c-1.133-.45-1.585-1.697-1.585-1.697s-.51.282-.51-.51c0-.793.51.51 1.02-2.548c0 0 1.415-.397 1.134-3.68h-.34s.85-3.51 0-4.698c-.853-1.188-1.187-1.98-3.06-2.548c-1.87-.567-1.19-.454-2.548-.396c-1.36.057-2.492.793-2.492 1.188c0 0-.85.057-1.188.397c-.34.34-.906 1.924-.906 2.32s.283 3.06.566 3.624l-.337.11c-.283 3.284 1.132 3.682 1.132 3.682c.51 3.058 1.02 1.755 1.02 2.548c0 .792-.51.51-.51.51s-.453 1.246-1.585 1.697c-1.132.453-7.416 2.887-7.927 3.396c-.51.52-.453 2.896-.453 2.896h12.036l.878-3.46l-.78-.78l1.343-1.345l1.343 1.344l-.78.78l.878 3.46h12.036s.063-2.378-.453-2.897z'/%3E%3C/svg%3E");
+        background-color: currentColor;
+        -webkit-mask-image: var(--svg);
+        mask-image: var(--svg);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+      }
+
+
+
+      .clarity--employee-solid {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Ccircle cx='16.86' cy='9.73' r='6.46' fill='%23000'/%3E%3Cpath fill='%23000' d='M21 28h7v1.4h-7z'/%3E%3Cpath fill='%23000' d='M15 30v3a1 1 0 0 0 1 1h17a1 1 0 0 0 1-1V23a1 1 0 0 0-1-1h-7v-1.47a1 1 0 0 0-2 0V22h-2v-3.58a32 32 0 0 0-5.14-.42a26 26 0 0 0-11 2.39a3.28 3.28 0 0 0-1.88 3V30Zm17 2H17v-8h7v.42a1 1 0 0 0 2 0V24h6Z'/%3E%3C/svg%3E");
+        background-color: currentColor;
+        -webkit-mask-image: var(--svg);
+        mask-image: var(--svg);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+      }
+
+
+
+      .icon-park-solid--transaction {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3Cmask id='ipSTransaction0'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='4'%3E%3Cpath fill='%23fff' stroke='%23fff' d='M39 6H9a3 3 0 0 0-3 3v30a3 3 0 0 0 3 3h30a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3'/%3E%3Cpath stroke='%23000' d='m21 31l5 4l8-10M14 15h20m-20 8h8'/%3E%3C/g%3E%3C/mask%3E%3C/defs%3E%3Cpath fill='%23000' d='M0 0h48v48H0z' mask='url(%23ipSTransaction0)'/%3E%3C/svg%3E");
+        background-color: currentColor;
+        -webkit-mask-image: var(--svg);
+        mask-image: var(--svg);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+      }
+
+
+      .ix--restore-backup-pc {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23000' fill-rule='evenodd' d='M213.333 64v213.333H64V64zm-64 149.333H128v21.334h21.333zM192 138.667H85.333v32H192zm0-53.334H85.333v32H192zm21.333 213.334v42.666l-79.887.019c26.987 38.677 71.816 63.981 122.554 63.981a150.6 150.6 0 0 0 21.335-1.512v43.007A194 194 0 0 1 256 448c-60.316 0-114.136-27.813-149.335-71.313l.002 71.313H64V298.667zm255.63 108.847a18 18 0 0 1 .37 3.638v19.393c0 21.422-38.205 38.788-85.333 38.788s-85.333-17.366-85.333-38.788v-19.393l.011-.642q.055-1.51.358-2.99c5.226 4.018 11.588 7.723 18.961 10.895c17.208 7.403 40.411 12.13 66.003 12.13c26.607 0 50.628-5.117 68.041-13.032c6.51-2.959 12.176-6.348 16.921-10m0-58.182a18 18 0 0 1 .37 3.638v19.394c0 21.422-38.205 38.788-85.333 38.788s-85.333-17.366-85.333-38.788V352.97l.011-.642q.055-1.51.358-2.99c5.226 4.018 11.588 7.723 18.961 10.895c17.208 7.403 40.411 12.13 66.003 12.13c26.607 0 50.628-5.116 68.041-13.032c6.51-2.958 12.176-6.347 16.921-9.999M384 256c46.657 0 84.568 17.02 85.322 38.146l.011.642v19.394c0 21.422-38.205 38.788-85.333 38.788c-46.657 0-84.568-17.02-85.322-38.147l-.011-.641v-19.394l.126-2.128C301.223 272.227 338.443 256 384 256'/%3E%3C/svg%3E");
+        background-color: currentColor;
+        -webkit-mask-image: var(--svg);
+        mask-image: var(--svg);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+      }
+
+
+
+      .ic--baseline-account-balance {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M4 10h3v7H4zm6.5 0h3v7h-3zM2 19h20v3H2zm15-9h3v7h-3zm-5-9L2 6v2h20V6z'/%3E%3C/svg%3E");
+        background-color: currentColor;
+        -webkit-mask-image: var(--svg);
+        mask-image: var(--svg);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+      }
+
+
+
+      .mdi--file-report {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M13 9h5.5L13 3.5zM6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.11.89-2 2-2m1 18h2v-6H7zm4 0h2v-8h-2zm4 0h2v-4h-2z'/%3E%3C/svg%3E");
+        background-color: currentColor;
+        -webkit-mask-image: var(--svg);
+        mask-image: var(--svg);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+      }
+
+
+
+      .solar--logout-2-bold {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' fill-rule='evenodd' d='M16.125 12a.75.75 0 0 0-.75-.75H4.402l1.961-1.68a.75.75 0 1 0-.976-1.14l-3.5 3a.75.75 0 0 0 0 1.14l3.5 3a.75.75 0 1 0 .976-1.14l-1.96-1.68h10.972a.75.75 0 0 0 .75-.75' clip-rule='evenodd'/%3E%3Cpath fill='%23000' d='M9.375 8c0 .702 0 1.053.169 1.306a1 1 0 0 0 .275.275c.253.169.604.169 1.306.169h4.25a2.25 2.25 0 0 1 0 4.5h-4.25c-.702 0-1.053 0-1.306.168a1 1 0 0 0-.275.276c-.169.253-.169.604-.169 1.306c0 2.828 0 4.243.879 5.121c.878.879 2.292.879 5.12.879h1c2.83 0 4.243 0 5.122-.879c.879-.878.879-2.293.879-5.121V8c0-2.828 0-4.243-.879-5.121S19.203 2 16.375 2h-1c-2.829 0-4.243 0-5.121.879c-.879.878-.879 2.293-.879 5.121'/%3E%3C/svg%3E");
+        background-color: currentColor;
+        -webkit-mask-image: var(--svg);
+        mask-image: var(--svg);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+      }
+      /* -------------------------------main contani--------------------------------- */
+
+      .table-scroll {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .icon-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            color: inherit;
+            cursor: pointer;
+        }
+        .container { 
+            padding: 0; /* Remove padding from container */
+        }
+        .dropdown { 
+            margin-bottom: 0; /* Remove bottom margin from dropdown */
+        }
+        .table-responsive { 
+            margin-top: 0; /* Remove margin-top from table */
+        }
+        .border-secondary { 
+            margin-top: 0; /* Remove margin-top from border */
+        }
+        .dropdown-toggle {
+            margin-bottom: 0; /* Remove margin from button */
+        }
+        .table {
+            margin-bottom: 0; /* Remove bottom margin from table */
+        }
+        h4 {
+            margin-bottom: 0; /* Remove bottom margin from heading */
+        }
+    </style>
+</head>
+<body>
+        <!-- Header -->
+        <div class="header inika-regular">
+          <a href="dashbord.html"><img src="image/Axiom_Logo.png" alt="Logo"></a>
+          <h1>AXIOM TECHGURU PVT. LTD.</h1>
+          <button class="toggle-btn" id="toggle-btn" onclick="toggleNav()">
+              <span>&#9776;</span>
+          </button>
+      </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar inika-regular mt-3" id="mySidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <ul>
+
+        <!-- ------------------Admin------------------------------ -->
+       <li>
+        <a href="#"><div class="d-flex align-items-center">
+            <span class="ri--admin-fill"></span>
+            <div class="px-2">Admin</div>
+        </div> 
+        <i class="bi bi-chevron-right dropdown-icon"></i></a>
+        <ul class="submenu">
+          <a href="AdminProfiles.html"><li>Admin Profiles</li></a>
+          <a href="AdminR&P.html"><li>Admin Roles and Permissions</li></a>
+          <a href="AandS.html"><li>Authentication and Security</li></a>
+          </ul>
+       </li> 
+
+        <!-- ------------------Trainee Info------------------------------ -->
+
+       <li>
+        <a href="#"><div class="d-flex align-items-center">
+            <span class="mdi--account-student"></span>
+            <div class="px-2">Trainee Information</div>
+        </div> 
+        <i class="bi bi-chevron-right dropdown-icon"></i></a>
+        <ul class="submenu">
+
+            <a href="Trainee Information (1).html"><li>Add New Trainee</li></a>
+            <a href="Trainee Information (2).html"><li>View Trainee Information</li></a>
+          </ul>
+       </li> 
+
+        <!-- ------------------Client Info------------------------------ -->
+
+       <li>
+        <a href="#"><div class="d-flex align-items-center">
+            <span class="raphael--customer"></span>
+            <div class="px-2">Client Information</div>
+        </div> 
+        <i class="bi bi-chevron-right dropdown-icon"></i></a>
+        <ul class="submenu">
+          <a href="Client  Information1.html"><li>Add New Client</li></a>
+          <a href="Client  Information2(a).html"><li>View Client Information</li></a>
+          <a href="Client Information3.html"><li>View Client Fees Details</li> </a>
+          </ul>
+       </li>
+       
+        <!-- ------------------Employee Info------------------------------ -->
+       
+       <li>
+        <a href="#"><div class="d-flex align-items-center">
+            <span class="clarity--employee-solid"></span>
+            <div class="px-2">Employee Information</div>
+        </div> 
+        <i class="bi bi-chevron-right dropdown-icon"></i></a>
+        <ul class="submenu">
+            <a href="Employee Info(1).html"> <li>Add New Employee</li></a>
+            <a href="Employee Info(2).html"> <li>View Employee Information</li></a>
+            
+          </ul>
+       </li> 
+
+        <!-- ------------------Transaction------------------------------ -->
+       
+       <li>
+        <a href="#"><div class="d-flex align-items-center">
+            <span class="icon-park-solid--transaction"></span>
+            <div class="px-2">Transaction</div>
+        </div> 
+        <i class="bi bi-chevron-right dropdown-icon"></i></a>
+        <ul class="submenu">
+            <a href="Transaction (1).html"> <li>Regular Transaction</li></a>
+            <a href="Transaction (2A).html"> <li>Commercial Transaction</li></a>
+            
+          </ul>
+       </li> 
+
+        <!-- ------------------Admission and Backup------------------------------ -->
+
+       <li>
+        <a href="#"><div class="d-flex align-items-center">
+            <span class="ix--restore-backup-pc"></span>
+            <div class="px-2">Admission And Backup</div>
+        </div> 
+        <i class="bi bi-chevron-right dropdown-icon"></i></a>
+        <ul class="submenu">
+            <a href="Admission.html"><li>Admission</li></a>
+            <a href="Backup.html"><li>Backup</li></a>
+          </ul>
+       </li> 
+
+        <!-- ------------------Accounts------------------------------ -->
+
+       <li>
+        <a href="#"><div class="d-flex align-items-center">
+            <span class="ic--baseline-account-balance"></span>
+            <div class="px-2">Accounts</div>
+        </div> 
+        <i class="bi bi-chevron-right dropdown-icon"></i></a>
+        <ul class="submenu">
+          <a href="AccountIncom.html"><li>Income</li></a>
+          <a href="AccountsExpenses.html"><li>Expenses</li></a>
+          </ul>
+       </li> 
+
+        <!-- ------------------Reports------------------------------ -->
+
+       <li>
+        <a href="Reports.html"><div class="d-flex align-items-center">
+            <span class="mdi--file-report"></span>
+            <a href="Reports.html"><div class="px-2">Reports</div></a>
+        </div> 
+        </a>
+       </li> 
+
+        <!-- ------------------Logout------------------------------ -->
+
+       <li>
+        <a href="#"><div class="d-flex align-items-center">
+            <span class="solar--logout-2-bold"></span>
+            <div class="px-2"> <a href="index.html">Logout</a> </div>
+        </div> 
+        </a>
+       </li> 
+
+
+    </ul>
+    </div>
+
+    <!------------------------------------------------ Add main content here ------------------------------------------------------------------->
+
+    <div class="main-content">
+    
+      <div class="container-fluid inter-uniquifier">
+        <div class="row ">
+          <div class="col-12 mt-5 ">
+            <div class="d-flex justify-content-between align-items-center mt-5">
+                <div class="position-relative">
+                     <!-- Search Icon -->
+                    <i class="bi bi-search position-absolute top-50 mx-3 fs-5 translate-middle-y " style="color:rgb(80, 78, 78) ;"></i>
+                    <!-- Search Input -->
+                    <input type="text" class="form-control fs-5  border-3 border-black rounded-5 px-5" placeholder="Search..." style="background-color: #DCEAF5;">
+                </div>
+                <div class="ms-1 mt-5" >
+                  <a class="text-black" href="dashbord.html"><i class="bi bi-arrow-left-circle display-5 " style="cursor: pointer;"></i></a>
+                </div>
+      
+            </div>
+           
+          </div>
+          
+        </div>
+      
+          <div class="container-fluid">
+             <!-- Dropdown -->
+              <div class="dropdown mt-5 text-end">
+                  <button class="btn btn text-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #310a31;">
+                      Client List
+                  </button>
+                  <ul class="dropdown-menu" >
+                      <li><a class="dropdown-item text-black" href="Client  Information2(b).html">International Clients</a></li>
+                      <li><a class="dropdown-item text-black" href="Client  Information2(c).html">Domestic Clients</a></li>
+                  </ul>
+              </div>
+      
+              <!-- Client List -->
+              <div class="border border-secondary mt-5"> 
+                  <div class="container-fluid" style="background-color: #310a31;">
+                      <h4 class="text-center text-white py-2">Client List</h4>
+                  </div>
+                  <div class="table-responsive table-scroll">
+                      <table class="table table-bordered border-black">
+                          <thead class="table-light border-black">
+                              <tr class="text-center">
+                                  <th style="background-color: #eee7ee;">Sr. No.</th>
+                                  <th style="background-color: #eee7ee;">First Name</th>
+                                  <th style="background-color: #eee7ee;">Last Name</th>
+                                  <th style="background-color: #eee7ee;">Email</th>
+                                  <th style="background-color: #eee7ee;">Project Name</th>
+                                  <th style="background-color: #eee7ee;">Action</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td class="text-center">1</td>
+                                  <td>Urvashi</td>
+                                  <td>Vaishnav</td>
+                                  <td>urvashi@gmail.com</td>
+                                  <td>ERP</td>
+                                  <td class="text-center">
+                                      <!-- <button class="icon-btn text-dark" title="Edit"><i class="bi bi-pencil"></i></button> -->
+      
+      <!-- Button trigger modal -->
+      <button type="button" class="icon-btn text-dark" title="Edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          <i class="bi bi-pencil"></i>
+        </button>
+        
+        <!-- Modal -->
+      <div class="modal fade mt-5" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <!-- Modal Header -->
+              <div class="modal-header border border-black position-relative" style="background-color: #310a31;">
+                <h1 class="modal-title fs-5 text-light position-absolute top-50 start-50 translate-middle" id="staticBackdropLabel">
+                  Client Information
+                </h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+        
+              <!-- Modal Body -->
+              <div class="modal-body border border-black">
+                <div class="container p-4">
+                  <!-- Form -->
+                  <form class="row g-3 text-start">
+                    <!-- First Name -->
+                    <div class="col-md-6 ">
+                      <label for="firstName" class="form-label">First Name</label>
+                      <input type="text" class="form-control border border-black" id="firstName" value="Urvashi" required style="background-color: #eee7ee;">
+                    </div>
+                    <!-- Last Name -->
+                    <div class="col-md-6">
+                      <label for="lastName" class="form-label">Last Name</label>
+                      <input type="text" class="form-control border border-black" id="lastName" value="Vaishnav" required style="background-color: #eee7ee;">
+                    </div>
+                    <!-- Email -->
+                    <div class="col-md-6">
+                      <label for="email" class="form-label">Email ID</label>
+                      <input type="email" class="form-control border border-black" id="email" value="urvashi@gmail.com" required style="background-color: #eee7ee;">
+                    </div>
+                    <!-- Client ID -->
+                    <div class="col-md-6">
+                      <label for="clientId" class="form-label">Client ID</label>
+                      <input type="text" class="form-control border border-black" id="clientId" value="#12" required style="background-color: #eee7ee;">
+                    </div>
+                    <!-- Project Name -->
+                    <div class="col-md-6">
+                      <label for="projectName" class="form-label">Project Name</label>
+                      <input type="text" class="form-control border border-black" id="projectName" value="ERP" required style="background-color: #eee7ee;">
+                    </div>
+                    <!-- Contact No -->
+                    <div class="col-md-6">
+                      <label for="contactNo" class="form-label">Contact No</label>
+                      <input type="tel" class="form-control border border-black" id="contactNo" value="+91 8613556236" required style="background-color: #eee7ee;">
+                    </div>
+                    <!-- Company -->
+                    <div class="col-md-6">
+                      <label for="company" class="form-label">Company</label>
+                      <input type="text" class="form-control border border-black" id="company" value="Axiom TechGuru PVT.Ltd." required style="background-color: #eee7ee;">
+                    </div>
+                    <!-- Address -->
+                    <div class="col-md-6">
+                      <label for="address" class="form-label">Address</label>
+                      <input type="text" class="form-control border border-black" id="address" value="It park" required style="background-color: #eee7ee;">
+                    </div>
+                    <!-- Country -->
+                    <div class="col-md-6">
+                      <label for="country" class="form-label">Country</label>
+                      <input type="text" class="form-control border border-black" id="country" value="India" required style="background-color: #eee7ee;">
+                    </div>
+                    <!-- City -->
+                    <div class="col-md-6">
+                      <label for="city" class="form-label">City</label>
+                      <input type="text" class="form-control border border-black" id="city" value="Nagpur" required style="background-color: #eee7ee;">
+                    </div>
+                    <!-- Budget -->
+                    <div class="col-md-6">
+                      <label for="budget" class="form-label">Budget</label>
+                      <input type="number" class="form-control border border-black" id="budget" value="8000" required style="background-color: #eee7ee;">
+                    </div>
+                    <!-- Date -->
+                    <div class="col-md-6">
+                      <label for="date" class="form-label">Date</label>
+                      <input type="date" class="form-control border border-black" id="date" required style="background-color: #eee7ee;">
+                    </div>
+                  </form>
+        
+                  <!-- Update Button -->
+                  <div class="text-center mt-4">
+                    <button type="button" onclick="myFunction()" class="btn text-white" style="background-color: #310a31;" data-bs-toggle="modal" data-bs-target="#">
+                      Update
+                    </button>
+                    <script>
+                      function myFunction() {
+                        alert("Data has been updated sucessfully!");
+                      }
+                      </script>
+                  </div>
+                  <!-- End of Success Modal -->
+                </div>
+              </div>
+              <!-- End of Modal Body -->
+            </div>
+          </div>
+        </div>
+        
+                                     <!-- View Button -->
+      <button type="button" class="icon-btn " style="color: #310a31;" title="View" data-bs-toggle="modal" data-bs-target="#Dropback">
+          <i class="bi bi-eye"></i>
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade text-start mt-5" id="Dropback" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <!-- Modal Header -->
+              <div style="background-color: #310a31;" class="modal-header border border-black position-relative">
+                <h1 class="modal-title fs-5 text-light position-absolute top-50 start-50 translate-middle" id="staticBackdropLabel">Client Information</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+        
+              <!-- Modal Body -->
+              <div class="modal-body border border-black">
+                <div class="container p-4">
+                  <form class="row g-3 text-start">
+                    <!-- First Name -->
+                    <div class="col-md-6 ">
+                      <label for="firstName" class="form-label">First Name</label>
+                      <input type="text" class="form-control border border-black" id="firstName" value="Urvashi"  style="background-color: #eee7ee;" disabled>
+                    </div>
+                    <!-- Last Name -->
+                    <div class="col-md-6">
+                      <label for="lastName" class="form-label">Last Name</label>
+                      <input type="text" class="form-control border border-black" id="lastName" value="Vaishnav"  style="background-color: #eee7ee;" disabled>
+                    </div>
+                    <!-- Email -->
+                    <div class="col-md-6">
+                      <label for="email" class="form-label">Email ID</label>
+                      <input type="email" class="form-control border border-black" id="email" value="urvashi@gmail.com"  style="background-color: #eee7ee;" disabled>
+                    </div>
+                    <!-- Client ID -->
+                    <div class="col-md-6">
+                      <label for="clientId" class="form-label">Client ID</label>
+                      <input type="text" class="form-control border border-black" id="clientId" value="#12"  style="background-color: #eee7ee;" disabled>
+                    </div>
+                    <!-- Project Name -->
+                    <div class="col-md-6">
+                      <label for="projectName" class="form-label">Project Name</label>
+                      <input type="text" class="form-control border border-black" id="projectName" value="ERP"  style="background-color: #eee7ee;" disabled>
+                    </div>
+                    <!-- Contact No -->
+                    <div class="col-md-6">
+                      <label for="contactNo" class="form-label">Contact No</label>
+                      <input type="tel" class="form-control border border-black" id="contactNo" value="+91 8613556236"  style="background-color: #eee7ee;" disabled>
+                    </div>
+                    <!-- Company -->
+                    <div class="col-md-6">
+                      <label for="company" class="form-label">Company</label>
+                      <input type="text" class="form-control border border-black" id="company" value="Axiom TechGuru PVT.Ltd."  style="background-color: #eee7ee;" disabled>
+                    </div>
+                    <!-- Address -->
+                    <div class="col-md-6">
+                      <label for="address" class="form-label">Address</label>
+                      <input type="text" class="form-control border border-black" id="address" value="It park"  style="background-color: #eee7ee;" disabled>
+                    </div>
+                    <!-- Country -->
+                    <div class="col-md-6">
+                      <label for="country" class="form-label">Country</label>
+                      <input type="text" class="form-control border border-black" id="country" value="India"  style="background-color: #eee7ee;" disabled>
+                    </div>
+                    <!-- City -->
+                    <div class="col-md-6">
+                      <label for="city" class="form-label">City</label>
+                      <input type="text" class="form-control border border-black" id="city" value="Nagpur"  style="background-color: #eee7ee;" disabled>
+                    </div>
+                    <!-- Budget -->
+                    <div class="col-md-6">
+                      <label for="budget" class="form-label">Budget</label>
+                      <input type="number" class="form-control border border-black" id="budget" value="8000"  style="background-color: #eee7ee;" disabled>
+                    </div>
+                    <!-- Date -->
+                    <div class="col-md-6">
+                      <label for="date" class="form-label">Date</label>
+                      <input type="date" class="form-control border border-black" id="date"  style="background-color: #eee7ee;" disabled>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+                                  <!-- Button to trigger the modal -->
+      <button type="button" class="icon-btn text-danger" title="View" data-bs-toggle="modal" data-bs-target="#newsPaper">
+          <i class="bi bi-trash"></i>
+      </button>
+      
+      <!-- Modal -->
+      <div class="modal fade p-5 " id="newsPaper" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+              <div style="background-color: #310a31;" class="modal-content">
+                  <div class="modal-header border-0">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                      <button type="button" class="btn-close btn btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body text-center text-white fw-bold fs-5">
+                      Are you sure you want to delete?
+                  </div>
+                  <div class="modal-footer justify-content-center border-0">
+                      <button type="button" class="btn btn-light fw-bold me-5 text-black" data-bs-target="#SaveBackdrop" data-bs-dismiss="modal">Delete</button>
+                      <!-- <script>
+                        function myFunction() {
+                          alert("Data has been deleted succesfully!");
+                        }
+                        </script> -->
+                      <button type="button" class="btn fw-bold text-white" style="background-color: red;">Cancel</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+         
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="text-center">2</td>
+                                  <td>Urvashi</td>
+                                  <td>Vaishnav</td>
+                                  <td>urvashi@gmail.com</td>
+                                  <td>ERP</td>
+                                  <td class="text-center">
+                                      <button type="button" class="icon-btn text-dark" title="Edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                          <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" class="icon-btn" style="color: #310a31;" title="View" data-bs-toggle="modal" data-bs-target="#Dropback">
+                                          <i class="bi bi-eye"></i>
+                                        </button>
+                                        
+                                        <button type="button" class="icon-btn text-danger" title="View" data-bs-toggle="modal" data-bs-target="#newsPaper">
+                                          <i class="bi bi-trash"></i>
+                                        </button>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="text-center">3</td>
+                                  <td>Urvashi</td>
+                                  <td>Vaishnav</td>
+                                  <td>urvashi@gmail.com</td>
+                                  <td>ERP</td>
+                                  <td class="text-center">
+                                      <button type="button" class="icon-btn text-dark" title="Edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                          <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" class="icon-btn" style="color: #310a31;" title="View" data-bs-toggle="modal" data-bs-target="#Dropback">
+                                          <i class="bi bi-eye"></i>
+                                        </button>
+                                        
+                                        <button type="button" class="icon-btn text-danger" title="View" data-bs-toggle="modal" data-bs-target="#newsPaper">
+                                          <i class="bi bi-trash"></i>
+                                        </button>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="text-center">4</td>
+                                  <td>Urvashi</td>
+                                  <td>Vaishnav</td>
+                                  <td>urvashi@gmail.com</td>
+                                  <td>ERP</td>
+                                  <td class="text-center">
+                                      <button type="button" class="icon-btn text-dark" title="Edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                          <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" class="icon-btn" style="color: #310a31;" title="View" data-bs-toggle="modal" data-bs-target="#Dropback">
+                                          <i class="bi bi-eye"></i>
+                                        </button>
+                                        
+                                        <button type="button" class="icon-btn text-danger" title="View" data-bs-toggle="modal" data-bs-target="#newsPaper">
+                                          <i class="bi bi-trash"></i>
+                                        </button>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="text-center">5</td>
+                                  <td>Urvashi</td>
+                                  <td>Vaishnav</td>
+                                  <td>urvashi@gmail.com</td>
+                                  <td>ERP</td>
+                                  <td class="text-center">
+                                      <button type="button" class="icon-btn text-dark" title="Edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                          <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" class="icon-btn" style="color: #310a31;" title="View" data-bs-toggle="modal" data-bs-target="#Dropback">
+                                          <i class="bi bi-eye"></i>
+                                        </button>
+                                        
+                                      <button class="icon-btn text-danger" title="Delete"><i class="bi bi-trash"></i></button>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="text-center">6</td>
+                                  <td>Urvashi</td>
+                                  <td>Vaishnav</td>
+                                  <td>urvashi@gmail.com</td>
+                                  <td>ERP</td>
+                                  <td class="text-center">
+                                      <button type="button" class="icon-btn text-dark" title="Edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                          <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" class="icon-btn" style="color: #310a31;" title="View" data-bs-toggle="modal" data-bs-target="#Dropback">
+                                          <i class="bi bi-eye"></i>
+                                        </button>
+                                        
+                                        <button type="button" class="icon-btn text-danger" title="View" data-bs-toggle="modal" data-bs-target="#newsPaper">
+                                          <i class="bi bi-trash"></i>
+                                        </button>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="text-center">7</td>
+                                  <td>Urvashi</td>
+                                  <td>Vaishnav</td>
+                                  <td>urvashi@gmail.com</td>
+                                  <td>ERP</td>
+                                  <td class="text-center">
+                                      <button type="button" class="icon-btn text-dark" title="Edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                          <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" class="icon-btn" style="color: #310a31;" title="View" data-bs-toggle="modal" data-bs-target="#Dropback">
+                                          <i class="bi bi-eye"></i>
+                                        </button>
+                                        
+                                        <button type="button" class="icon-btn text-danger" title="View" data-bs-toggle="modal" data-bs-target="#newsPaper">
+                                          <i class="bi bi-trash"></i>
+                                        </button>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="text-center">8</td>
+                                  <td>Urvashi</td>
+                                  <td>Vaishnav</td>
+                                  <td>urvashi@gmail.com</td>
+                                  <td>ERP</td>
+                                  <td class="text-center">
+                                      <button type="button" class="icon-btn text-dark" title="Edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                          <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" class="icon-btn" style="color: #310a31;" title="View" data-bs-toggle="modal" data-bs-target="#Dropback">
+                                          <i class="bi bi-eye"></i>
+                                        </button>
+                                        
+                                        <button type="button" class="icon-btn text-danger" title="View" data-bs-toggle="modal" data-bs-target="#newsPaper">
+                                          <i class="bi bi-trash"></i>
+                                        </button>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="text-center">9</td>
+                                  <td>Urvashi</td>
+                                  <td>Vaishnav</td>
+                                  <td>urvashi@gmail.com</td>
+                                  <td>ERP</td>
+                                  <td class="text-center">
+                                      <button type="button" class="icon-btn text-dark" title="Edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                          <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" class="icon-btn" style="color: #310a31;" title="View" data-bs-toggle="modal" data-bs-target="#Dropback">
+                                          <i class="bi bi-eye"></i>
+                                        </button>
+                                        
+                                        <button type="button" class="icon-btn text-danger" title="View" data-bs-toggle="modal" data-bs-target="#newsPaper">
+                                          <i class="bi bi-trash"></i>
+                                        </button>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="text-center">10</td>
+                                  <td>Urvashi</td>
+                                  <td>Vaishnav</td>
+                                  <td>urvashi@gmail.com</td>
+                                  <td>ERP</td>
+                                  <td class="text-center">
+                                      <button type="button" class="icon-btn text-dark" title="Edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                          <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" class="icon-btn" style="color: #310a31;" title="View" data-bs-toggle="modal" data-bs-target="#Dropback">
+                                          <i class="bi bi-eye"></i>
+                                        </button>
+                                        
+                                        <button type="button" class="icon-btn text-danger" title="View" data-bs-toggle="modal" data-bs-target="#newsPaper">
+                                          <i class="bi bi-trash"></i>
+                                        </button>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="text-center">11</td>
+                                  <td>Urvashi</td>
+                                  <td>Vaishnav</td>
+                                  <td>urvashi@gmail.com</td>
+                                  <td>ERP</td>
+                                  <td class="text-center">
+                                      <button type="button" class="icon-btn text-dark" title="Edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                          <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button type="button" class="icon-btn" style="color: #310a31;" title="View" data-bs-toggle="modal" data-bs-target="#Dropback">
+                                          <i class="bi bi-eye"></i>
+                                        </button>
+                                        
+                                        <button type="button" class="icon-btn text-danger" title="View" data-bs-toggle="modal" data-bs-target="#newsPaper">
+                                          <i class="bi bi-trash"></i>
+                                        </button>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+        </div>
+  
+    </div>
+
+    <!-- Bootstrap JS and Custom JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const toggleBtn = document.getElementById('toggle-btn');
+        const sidebar = document.getElementById('mySidenav');
+
+        // Toggle sidebar visibility
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('show');
+        });
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                sidebar.classList.remove('show');
+            }
+        });
+
+
+
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+  const dropdownLinks = document.querySelectorAll('.sidebar ul li > a');
+
+  // Dropdown toggle
+  dropdownLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const submenu = link.nextElementSibling;
+      const dropdownIcon = link.querySelector('.dropdown-icon');
+
+      // Close all other open dropdowns
+      document.querySelectorAll('.submenu.open').forEach(openMenu => {
+        if (openMenu !== submenu) {
+          openMenu.classList.remove('open');
+          openMenu.previousElementSibling.querySelector('.dropdown-icon').classList.remove('rotate');
+        }
+      });
+
+      // Toggle the clicked dropdown
+      if (submenu) {
+        submenu.classList.toggle('open');
+        dropdownIcon.classList.toggle('rotate');
+      }
+    });
+  });
+});
+
+        // JavaScript
+        function toggleNav() {
+            const sidebar = document.getElementById("mySidenav");
+            if (window.innerWidth < 768) {
+                sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
+            }
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+
+        
+    </script>
+</body>
+</html>
